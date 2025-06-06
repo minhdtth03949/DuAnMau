@@ -75,21 +75,31 @@ public class Login extends javax.swing.JFrame {
 
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
-        NhanVien nv = new NhanVien();
-        nv.setEmail(txtEmail.getText());
-        nv.setMatKhau(txtMK.getText());
-        try {
-            for(NhanVien n : qlnv.getAll()){
-                if(n.getEmail().equals(nv.getEmail()) && n.getMatKhau().equals(nv.getMatKhau())){
-                    TrangChu tc = new TrangChu(nv);
-                    tc.setVisible(true);
-                }
+                                             
+    NhanVien nv = new NhanVien();
+    nv.setEmail(txtEmail.getText());
+    nv.setMatKhau(txtMK.getText());
+    System.out.println("Email nhập: '" + nv.getEmail() + "', Mật khẩu nhập: '" + nv.getMatKhau() + "'");
+    try {
+        System.out.println("Bắt đầu lấy danh sách nhân viên...");
+        for(NhanVien n : qlnv.getAll()) {
+            System.out.println("Email DB: '" + n.getEmail() + "', Mật khẩu DB: '" + n.getMatKhau() + "'");
+            if(n.getEmail().equals(nv.getEmail()) && n.getMatKhau().equals(nv.getMatKhau())) {
+                System.out.println("Tìm thấy tài khoản khớp!");
+                TrangChu tc = new TrangChu(nv);
+                tc.setLocationRelativeTo(null);
+                tc.setVisible(true);
+                System.out.println("Form TrangChu visible: " + tc.isVisible());
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
+    } catch (SQLException ex) {
+        System.out.println("SQLException: " + ex.getMessage());
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (ClassNotFoundException ex) {
+        System.out.println("ClassNotFoundException: " + ex.getMessage());
+        Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
+    }
+
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**

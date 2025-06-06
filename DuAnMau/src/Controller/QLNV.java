@@ -31,9 +31,10 @@ public class QLNV {
         while(rs.next()){
             NhanVien nv = new NhanVien();
             nv.setMaNV(rs.getInt(1));
-            nv.setEmail(rs.getString(2));
-            nv.setMatKhau(rs.getString(3));
-            nv.setVaiTro(rs.getBoolean(4));
+            nv.setTenDangNhap(rs.getString(2));
+            nv.setEmail(rs.getString(3));
+            nv.setMatKhau(rs.getString(4));
+            nv.setVaiTro(rs.getBoolean(5));
             listNV.add(nv);
             
             
