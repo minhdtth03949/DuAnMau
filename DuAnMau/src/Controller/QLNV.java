@@ -16,7 +16,7 @@ import java.sql.*;
  */
 public class QLNV {
 
-    private MyConnection conn;
+    MyConnection conn;
     
     public QLNV() {
         conn = new MyConnection();

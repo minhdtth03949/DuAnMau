@@ -14,7 +14,7 @@ import java.sql.*;
  */
 public class QLSanPham {
     
-    private MyConnection conn;
+    MyConnection conn;
 
     public QLSanPham() {
         conn = new MyConnection();

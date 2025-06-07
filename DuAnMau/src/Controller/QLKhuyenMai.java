@@ -14,7 +14,7 @@ import java.sql.*;
  */
 public class QLKhuyenMai {
     
-    private MyConnection conn;
+    MyConnection conn;
 
     public QLKhuyenMai() {
         conn = new MyConnection();
