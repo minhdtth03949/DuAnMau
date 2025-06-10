@@ -218,17 +218,17 @@
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel3" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="txt_mota" min="-2" pref="455" max="-2" attributes="0"/>
+                          <Component id="txt_email" min="-2" pref="455" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel2" max="32767" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="txt_Ten" min="-2" pref="455" max="-2" attributes="0"/>
+                          <Component id="txt_NhapTen" min="-2" pref="455" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel4" max="32767" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="txt_loaiHang" min="-2" pref="455" max="-2" attributes="0"/>
+                          <Component id="txt_MatKhau" min="-2" pref="455" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Component id="jLabel5" min="-2" pref="79" max="-2" attributes="0"/>
@@ -238,7 +238,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel1" min="-2" pref="56" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="64" max="-2" attributes="0"/>
-                          <Component id="txt_Id" min="-2" pref="455" max="-2" attributes="0"/>
+                          <Component id="txt_NhapID" min="-2" pref="455" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -252,22 +252,22 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_Id" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_NhapID" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_Ten" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_NhapTen" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_mota" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_email" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_loaiHang" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_MatKhau" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -280,7 +280,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="txt_Ten">
+        <Component class="javax.swing.JTextField" name="txt_NhapTen">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="ff" type="rgb"/>
@@ -293,13 +293,9 @@
               <Color blue="cc" green="cc" red="ff" type="rgb"/>
             </Property>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
-                <StringItem index="0" value="1"/>
-                <StringItem index="1" value="2"/>
-                <StringItem index="2" value="3"/>
-                <StringItem index="3" value="4"/>
-                <StringItem index="4" value="5"/>
-                <StringItem index="5" value="6"/>
+              <StringArray count="2">
+                <StringItem index="0" value="Admin"/>
+                <StringItem index="1" value="Nh&#xe2;n Vi&#xea;n"/>
               </StringArray>
             </Property>
           </Properties>
@@ -322,7 +318,7 @@
             <Property name="text" type="java.lang.String" value="Nh&#x1ead;p Email: "/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_mota">
+        <Component class="javax.swing.JTextField" name="txt_email">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="ff" type="rgb"/>
@@ -334,7 +330,7 @@
             <Property name="text" type="java.lang.String" value="Nh&#x1ead;p Id:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_loaiHang">
+        <Component class="javax.swing.JTextField" name="txt_MatKhau">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="ff" type="rgb"/>
@@ -346,7 +342,7 @@
             <Property name="text" type="java.lang.String" value="Nh&#x1ead;p M&#x1ead;t kh&#x1ea9;u:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_Id">
+        <Component class="javax.swing.JTextField" name="txt_NhapID">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="cc" red="ff" type="rgb"/>
@@ -373,7 +369,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="txt_TimKiem" min="-2" pref="347" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="jButton1" min="-2" pref="118" max="-2" attributes="0"/>
+                  <Component id="btn_TimKiem" min="-2" pref="118" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -385,7 +381,7 @@
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel6" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
                       <Component id="txt_TimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jButton1" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="btn_TimKiem" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="30" max="32767" attributes="0"/>
               </Group>
@@ -405,7 +401,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton1">
+        <Component class="javax.swing.JButton" name="btn_TimKiem">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="ff" red="cc" type="rgb"/>

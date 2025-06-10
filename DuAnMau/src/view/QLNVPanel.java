@@ -18,17 +18,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class QLNVPanel extends javax.swing.JPanel {
 
+    DefaultTableModel TableModel;
+    int index = -1;
     /**
      * Creates new form QLNV
      */
     QLNV qlnv = new QLNV();
-    
+
     public QLNVPanel() {
         qlnv = new QLNV();
         initComponents();
         loadDataToTable();
     }
-    
+
     private void loadDataToTable() {
         try {
             List<NhanVien> listNV = qlnv.getAll();
@@ -46,6 +48,39 @@ public class QLNVPanel extends javax.swing.JPanel {
         } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(QLNVPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    // Làm Mới
+    public void LamMoi() {
+        txt_NhapID.setText("");
+        txt_NhapTen.setText("");
+        txt_MatKhau.setText("");
+        txt_TimKiem.setText("");
+        txt_email.setText("");
+        cbo_VaiTro.setSelectedItem("1");
+    }
+
+    // Thêm Nhân Viên
+    public void ThemDL() {
+        int Ma = Integer.parseInt(txt_NhapID.getText());
+        String Ten = txt_NhapTen.getText();
+        String MatKhau = txt_MatKhau.getText();
+        String Email = txt_email.getText();
+        // Gán trực tiếp số vào ComboBox
+        cbo_VaiTro.addItem("1 - Admin");
+        cbo_VaiTro.addItem("0 - Nhân viên");
+
+        // Khi đọc giá trị
+        String chon = cbo_VaiTro.getSelectedItem().toString(); // "1 - Admin"
+        int VaiTro = Integer.parseInt(chon.split(" - ")[0]);   // Tách lấy số 1 hoặc 2
+        boolean vaitro;
+        if (VaiTro == 1) {
+            vaitro = true;
+        } else {
+            vaitro = false;
+        }
+
+        NhanVien nv = new NhanVien(Ma, Ten, MatKhau, Email, vaiTro);
     }
 
     /**
@@ -66,20 +101,20 @@ public class QLNVPanel extends javax.swing.JPanel {
         tbl_Bang = new javax.swing.JTable();
         btn_Show = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        txt_Ten = new javax.swing.JTextField();
+        txt_NhapTen = new javax.swing.JTextField();
         cbo_VaiTro = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_mota = new javax.swing.JTextField();
+        txt_email = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        txt_loaiHang = new javax.swing.JTextField();
+        txt_MatKhau = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txt_Id = new javax.swing.JTextField();
+        txt_NhapID = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txt_TimKiem = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btn_TimKiem = new javax.swing.JButton();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,10 +176,10 @@ public class QLNVPanel extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Thông Tin Nhân Viên"));
 
-        txt_Ten.setBackground(new java.awt.Color(255, 204, 204));
+        txt_NhapTen.setBackground(new java.awt.Color(255, 204, 204));
 
         cbo_VaiTro.setBackground(new java.awt.Color(255, 204, 204));
-        cbo_VaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4", "5", "6" }));
+        cbo_VaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Nhân Viên" }));
 
         jLabel5.setText("Chọn Vai Trò:");
 
@@ -152,15 +187,15 @@ public class QLNVPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Nhập Email: ");
 
-        txt_mota.setBackground(new java.awt.Color(255, 204, 204));
+        txt_email.setBackground(new java.awt.Color(255, 204, 204));
 
         jLabel1.setText("Nhập Id:");
 
-        txt_loaiHang.setBackground(new java.awt.Color(255, 204, 204));
+        txt_MatKhau.setBackground(new java.awt.Color(255, 204, 204));
 
         jLabel4.setText("Nhập Mật khẩu:");
 
-        txt_Id.setBackground(new java.awt.Color(255, 204, 204));
+        txt_NhapID.setBackground(new java.awt.Color(255, 204, 204));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -172,15 +207,15 @@ public class QLNVPanel extends javax.swing.JPanel {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_mota, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
-                        .addComponent(txt_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_NhapTen, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txt_loaiHang, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txt_MatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -188,7 +223,7 @@ public class QLNVPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(64, 64, 64)
-                        .addComponent(txt_Id, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_NhapID, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -198,19 +233,19 @@ public class QLNVPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(txt_Id, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_NhapID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txt_Ten, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_NhapTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(txt_mota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txt_loaiHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_MatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -224,9 +259,9 @@ public class QLNVPanel extends javax.swing.JPanel {
 
         txt_TimKiem.setBackground(new java.awt.Color(255, 204, 204));
 
-        jButton1.setBackground(new java.awt.Color(204, 255, 204));
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/search.png"))); // NOI18N
-        jButton1.setText("Tìm Kiếm");
+        btn_TimKiem.setBackground(new java.awt.Color(204, 255, 204));
+        btn_TimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/search.png"))); // NOI18N
+        btn_TimKiem.setText("Tìm Kiếm");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -238,7 +273,7 @@ public class QLNVPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txt_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -248,7 +283,7 @@ public class QLNVPanel extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -312,17 +347,17 @@ public class QLNVPanel extends javax.swing.JPanel {
 
     private void btn_ShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ShowActionPerformed
 
-
+        loadDataToTable();
     }//GEN-LAST:event_btn_ShowActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_Show;
     private javax.swing.JButton btn_Sua;
+    private javax.swing.JButton btn_TimKiem;
     private javax.swing.JButton btn_Xoa;
     private javax.swing.JButton btn_them;
     private javax.swing.JComboBox<String> cbo_VaiTro;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -335,10 +370,10 @@ public class QLNVPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTable tbl_Bang;
-    private javax.swing.JTextField txt_Id;
-    private javax.swing.JTextField txt_Ten;
+    private javax.swing.JTextField txt_MatKhau;
+    private javax.swing.JTextField txt_NhapID;
+    private javax.swing.JTextField txt_NhapTen;
     private javax.swing.JTextField txt_TimKiem;
-    private javax.swing.JTextField txt_loaiHang;
-    private javax.swing.JTextField txt_mota;
+    private javax.swing.JTextField txt_email;
     // End of variables declaration//GEN-END:variables
 }
