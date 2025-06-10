@@ -35,10 +35,9 @@ public class QLNV {
             nv.setEmail(rs.getString(3));
             nv.setMatKhau(rs.getString(4));
             nv.setVaiTro(rs.getBoolean(5));
-            listNV.add(nv);
-            
-            
+            listNV.add(nv); 
         }
         return listNV;
     }
+    
 }
