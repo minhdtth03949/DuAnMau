@@ -3,31 +3,36 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package view;
+
 import Controller.QLBanHang;
 import Model.ChiTietHoaDon;
 import Model.ChiTietSanPham;
 import Model.HoaDon;
 import Model.SanPham;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author asus
  */
-public class BanHang extends javax.swing.JFrame {
+public class BanHang2 extends javax.swing.JFrame {
 
     /**
-     * Creates new form BanHang
+     * Creates new form BanHang2
      */
-    
+     
     QLBanHang qlbh = new QLBanHang();
     int maSP, rowIndexSP, maCTSP, maHD, rowIndexHD, rowIndexCTHD, maCTHD;
     float donGia;
 
-    public BanHang() throws ClassNotFoundException, SQLException {
+    public BanHang2() throws ClassNotFoundException, SQLException {
         initComponents();
         LoadSanPham();
         LoadHoaDon();
@@ -87,7 +92,7 @@ public class BanHang extends javax.swing.JFrame {
                 cthd.getTrangThai() ? "Còn hiệu lực" : "Hủy"
             });
         }
-        tblHoaDonChiTiet.setModel(model);
+        tblChiTietHoaDon.setModel(model);
     }
 
     public void LoadChiTietSP(int maSP) throws ClassNotFoundException, SQLException {
@@ -108,6 +113,7 @@ public class BanHang extends javax.swing.JFrame {
         }
         tblChiTietSanPham.setModel(model);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,40 +123,16 @@ public class BanHang extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnXoaSPKhoiHD = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        tblHoaDonChiTiet = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
-        btnXoaHoaDon = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoaDon = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblChiTietHoaDon = new javax.swing.JTable();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblSanPham = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
         tblChiTietSanPham = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblSanPham = new javax.swing.JTable();
-        btnTaoHoaDon = new javax.swing.JButton();
-        btnThemSPVaoHD = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        btnXoaSPKhoiHD.setText("Xóa khỏi Hóa Đơn");
-
-        tblHoaDonChiTiet.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane3.setViewportView(tblHoaDonChiTiet);
-
-        jLabel1.setText("Chi Tiết Hóa Đơn");
-
-        btnXoaHoaDon.setText("Xóa Hóa Đơn");
 
         tblHoaDon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,6 +152,42 @@ public class BanHang extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tblHoaDon);
 
+        tblChiTietHoaDon.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblChiTietHoaDon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblChiTietHoaDonMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblChiTietHoaDon);
+
+        tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblSanPhamMouseClicked(evt);
+            }
+        });
+        jScrollPane3.setViewportView(tblSanPham);
+
         tblChiTietSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -188,88 +206,34 @@ public class BanHang extends javax.swing.JFrame {
         });
         jScrollPane4.setViewportView(tblChiTietSanPham);
 
-        tblSanPham.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        tblSanPham.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblSanPhamMouseClicked(evt);
-            }
-        });
-        jScrollPane2.setViewportView(tblSanPham);
-
-        btnTaoHoaDon.setText("Tạo Hóa Đơn");
-        btnTaoHoaDon.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTaoHoaDonActionPerformed(evt);
-            }
-        });
-
-        btnThemSPVaoHD.setText("Thêm Vào Hóa Đơn");
-        btnThemSPVaoHD.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnThemSPVaoHDActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(layout.createSequentialGroup()
-                            .addComponent(jScrollPane3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnXoaSPKhoiHD, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnThemSPVaoHD, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnXoaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(33, 33, 33)
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(246, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(80, 80, 80)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnTaoHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(29, 29, 29)
-                        .addComponent(btnXoaHoaDon, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnXoaSPKhoiHD, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(btnThemSPVaoHD, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(197, Short.MAX_VALUE))
         );
 
         pack();
@@ -277,7 +241,7 @@ public class BanHang extends javax.swing.JFrame {
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         // TODO add your handling code here:
-       rowIndexHD = tblHoaDon.getSelectedRow();
+        rowIndexHD = tblHoaDon.getSelectedRow();
         try {
             if (rowIndexHD < 0 || rowIndexHD >= qlbh.getAllHoaDon().size()) {
                 return;
@@ -290,14 +254,25 @@ public class BanHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
-    private void tblChiTietSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietSanPhamMouseClicked
+    private void tblChiTietHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietHoaDonMouseClicked
         // TODO add your handling code here:
-     
-    }//GEN-LAST:event_tblChiTietSanPhamMouseClicked
+        
+        rowIndexCTHD = tblChiTietHoaDon.getSelectedRow();
+        try {
+            if (rowIndexCTHD < 0 || rowIndexCTHD >= qlbh.getAllChiTietHoaDon(maHD).size()) {
+                return;
+            } else {
+                maCTHD = (int) tblChiTietHoaDon.getValueAt(rowIndexCTHD, 0);
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_tblChiTietHoaDonMouseClicked
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         // TODO add your handling code here:
-       rowIndexSP = tblSanPham.getSelectedRow();
+        
+        rowIndexSP = tblSanPham.getSelectedRow();
         try {
             if (rowIndexSP < 0 || rowIndexSP >= qlbh.getAllSanPham().size()) {
                 return;
@@ -311,33 +286,77 @@ public class BanHang extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
-    private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
-        HoaDon hd = new HoaDon();
-        hd.setMaNV(1); // Giả định MaNV mặc định
-        hd.setTrangThai(false); // Chưa thanh toán
-        hd.setNgayThanhToan(new java.sql.Date(System.currentTimeMillis()));
-        hd.setGioThanhToan((int) (System.currentTimeMillis() % (24 * 60 * 60 * 1000) / (60 * 60 * 1000))); // Giả định giờ
+    private void tblChiTietSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietSanPhamMouseClicked
+        // TODO add your handling code here:
+        
+        rowIndexSP = tblSanPham.getSelectedRow();
         try {
-            if (qlbh.ThemHoaDon(hd)) {
-                JOptionPane.showMessageDialog(rootPane, "Thêm hóa đơn thành công");
-                LoadHoaDon();
+            if (rowIndexSP < 0 || rowIndexSP >= qlbh.getAllSanPham().size()) {
+                return;
             } else {
-                JOptionPane.showMessageDialog(rootPane, "Thêm hóa đơn thất bại");
+                maSP = (int) tblSanPham.getValueAt(rowIndexSP, 0);
+                donGia = (float) tblSanPham.getValueAt(rowIndexSP, 2);
+                LoadChiTietSP(maSP);
             }
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_btnTaoHoaDonActionPerformed
-
-    private void btnThemSPVaoHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPVaoHDActionPerformed
-        
-
-    }//GEN-LAST:event_btnThemSPVaoHDActionPerformed
+    }//GEN-LAST:event_tblChiTietSanPhamMouseClicked
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(BanHang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(BanHang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(BanHang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(BanHang2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    new BanHang2().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(BanHang2.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(BanHang2.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+    }
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JTable tblChiTietHoaDon;
+    private javax.swing.JTable tblChiTietSanPham;
+    private javax.swing.JTable tblHoaDon;
+    private javax.swing.JTable tblSanPham;
+    // End of variables declaration//GEN-END:variables
+}
+
+public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -364,24 +383,13 @@ public class BanHang extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BanHang().setVisible(true);
+                try {
+                    new BanHang().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
-
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnTaoHoaDon;
-    private javax.swing.JButton btnThemSPVaoHD;
-    private javax.swing.JButton btnXoaHoaDon;
-    private javax.swing.JButton btnXoaSPKhoiHD;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTable tblChiTietSanPham;
-    private javax.swing.JTable tblHoaDon;
-    private javax.swing.JTable tblHoaDonChiTiet;
-    private javax.swing.JTable tblSanPham;
-    // End of variables declaration//GEN-END:variables
-}
