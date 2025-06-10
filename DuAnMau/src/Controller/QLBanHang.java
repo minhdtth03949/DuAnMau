@@ -7,18 +7,15 @@ package Controller;
 import Model.ChiTietHoaDon;
 import Model.ChiTietSanPham;
 import Model.HoaDon;
-import Model.KhuyenMai;
-import Model.NhanVien;
 import Model.SanPham;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Date;
 
 
 /**
  *
- * @author asus
+ * @author asus 
  */
 public class QLBanHang {
     
@@ -26,25 +23,6 @@ public class QLBanHang {
 
     public QLBanHang() {
         mc = new MyConnection();
-    }
-
-    public List<NhanVien> getAllNhanVien() throws ClassNotFoundException, SQLException {
-        mc = new MyConnection();
-        String query = "SELECT * FROM NhanVien";
-        Connection conn = mc.DBConnect();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        List<NhanVien> lst = new ArrayList<>();
-        while (rs.next()) {
-            NhanVien nv = new NhanVien();
-            nv.setMaNV(rs.getInt(1));
-            nv.setTenDangNhap(rs.getString(2));
-            nv.setEmail(rs.getString(3));
-            nv.setMatKhau(rs.getString(4));
-            nv.setVaiTro(rs.getBoolean(5));
-            lst.add(nv);
-        }
-        return lst;
     }
 
     public List<SanPham> getAllSanPham() throws ClassNotFoundException, SQLException {
@@ -63,6 +41,9 @@ public class QLBanHang {
             sp.setMaNV(rs.getInt(5));
             lst.add(sp);
         }
+        rs.close();
+        stmt.close();
+        conn.close();
         return lst;
     }
 
@@ -84,6 +65,9 @@ public class QLBanHang {
             ctsp.setHanSD(rs.getDate(6));
             lst.add(ctsp);
         }
+        rs.close();
+        stmt.close();
+        conn.close();
         return lst;
     }
 
@@ -100,28 +84,12 @@ public class QLBanHang {
             hd.setMaNV(rs.getInt(2));
             hd.setTrangThai(rs.getBoolean(3));
             hd.setNgayThanhToan(rs.getDate(4));
-            hd.setGioThanhToan(rs.getInt(5));
+            hd.setGioThanhToan(rs.getInt(5)); // Giả định GioThanhToan là int (cần điều chỉnh nếu dùng Time)
             lst.add(hd);
         }
-        return lst;
-    }
-
-    public List<KhuyenMai> getAllKhuyenMai() throws ClassNotFoundException, SQLException {
-        mc = new MyConnection();
-        String query = "SELECT * FROM KhuyenMai";
-        Connection conn = mc.DBConnect();
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        List<KhuyenMai> lst = new ArrayList<>();
-        while (rs.next()) {
-            KhuyenMai km = new KhuyenMai();
-            km.setMaKM(rs.getInt(1));
-            km.setPhanTramKM(rs.getInt(2));
-            km.setThoiGianBatDau(rs.getDate(3));
-            km.setThoiGianKetThuc(rs.getDate(4));
-            km.setMaNV(rs.getInt(5));
-            lst.add(km);
-        }
+        rs.close();
+        stmt.close();
+        conn.close();
         return lst;
     }
 
@@ -145,6 +113,9 @@ public class QLBanHang {
             cthd.setTrangThai(rs.getBoolean(8));
             lst.add(cthd);
         }
+        rs.close();
+        stmt.close();
+        conn.close();
         return lst;
     }
 
@@ -155,8 +126,8 @@ public class QLBanHang {
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setInt(1, hd.getMaNV());
         stmt.setBoolean(2, hd.getTrangThai());
-        stmt.setDate(3, (Date) hd.getNgayThanhToan());
-        stmt.setInt(4, hd.getGioThanhToan());
+        stmt.setDate(3, new java.sql.Date(hd.getNgayThanhToan().getTime()));
+        stmt.setInt(4, hd.getGioThanhToan()); // Cần điều chỉnh nếu dùng Time
         int rowAdded = stmt.executeUpdate();
         return rowAdded > 0;
     }
@@ -177,27 +148,27 @@ public class QLBanHang {
         return rowAdded > 0;
     }
 
-    public boolean UpdateChiTietHD(int maCTHD, int soLuong, float donGia, float giaApDungMaKM) throws ClassNotFoundException, SQLException {
+    public boolean UpdateChiTietHD(int maCTHD, float donGia, float giaApDungMaKM, boolean trangThai) throws ClassNotFoundException, SQLException {
         mc = new MyConnection();
         String query = "UPDATE ChiTietHoaDon SET DonGia = ?, GiaApDungMaKM = ?, TrangThai = ? WHERE MaCTHD = ?";
         Connection conn = mc.DBConnect();
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setFloat(1, donGia);
         stmt.setFloat(2, giaApDungMaKM);
-        stmt.setBoolean(3, true); // Giả định cập nhật trạng thái là true
+        stmt.setBoolean(3, trangThai);
         stmt.setInt(4, maCTHD);
         int rowUpdated = stmt.executeUpdate();
         return rowUpdated > 0;
     }
 
-    public boolean UpdateHoaDon(int maHD, boolean trangThai, Date ngayThanhToan, Time gioThanhToan) throws ClassNotFoundException, SQLException {
+    public boolean UpdateHoaDon(int maHD, boolean trangThai, Date ngayThanhToan, int gioThanhToan) throws ClassNotFoundException, SQLException {
         mc = new MyConnection();
         String query = "UPDATE HoaDon SET TrangThai = ?, NgayThanhToan = ?, GioThanhToan = ? WHERE MaHD = ?";
         Connection conn = mc.DBConnect();
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setBoolean(1, trangThai);
-        stmt.setDate(2, ngayThanhToan);
-        stmt.setTime(3, gioThanhToan);
+        stmt.setDate(2, new java.sql.Date(ngayThanhToan.getTime()));
+        stmt.setInt(3, gioThanhToan); // Cần điều chỉnh nếu dùng Time
         stmt.setInt(4, maHD);
         int rowUpdated = stmt.executeUpdate();
         return rowUpdated > 0;
@@ -226,7 +197,6 @@ public class QLBanHang {
         int rowDeleted = stmt2.executeUpdate();
         return rowDeleted > 0;
     }
-    
     
     }
     
