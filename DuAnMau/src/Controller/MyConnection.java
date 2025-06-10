@@ -25,7 +25,7 @@ public MyConnection() {
         Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         String url = "jdbc:sqlserver://localhost\\SQLEXPRESS01:1433;databaseName=DuAnMau;trustServerCertificate=true";
         String user = "sa";
-        String pass = "123";
+        String pass = "123456789"; // Tự Đổi Mật Khẩu Nếu Muốn Chạy DBConnect 
         return DriverManager.getConnection(url, user, pass);
     }
     
