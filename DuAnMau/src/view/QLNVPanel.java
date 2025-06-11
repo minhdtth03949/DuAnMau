@@ -97,7 +97,7 @@ public class QLNVPanel extends javax.swing.JPanel {
         } else {
             vaitro = false; // Ngược Lại Dao Diện Là Nhân Viên Thì Vai Trf Sẽ Thành False
         }
-        NhanVien nv = new NhanVien(Ma, MatKhau, Email, MatKhau, vaitro);
+        NhanVien nv = new NhanVien(Ma, Ten, Email, MatKhau, vaitro);
         int Result = qlnv.ThemNV(nv);
         if (Result == 1) { // Nếu Result Bằng 1 Thì Sẽ Thêm Dược Dữ Liệu Nhân Viên Thành Công.
             JOptionPane.showMessageDialog(this, "Thêm DL Thành  Công.");
@@ -142,23 +142,23 @@ public class QLNVPanel extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "Mã Nhân Viên Phải Là Số Nguyên.");
                 return;
             }
-            String Tennv = txt_NhapTen.getText();
+            String Tennv = txt_NhapTen.getText(); // Thông Báo Cho Người Dùng Tên Nhân Viên Khi Sửa Không Được Để Trống.
             if (txt_NhapTen.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tên Nhân Viên.");
                 return;
             }
-            String Email = txt_email.getText();
+            String Email = txt_email.getText(); // Thông Báo Cho Người Dùng Khi Sửa Email Không Được Để Trống.
             if (txt_email.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Email.");
                 return;
             }
-            String MatKhau = txt_MatKhau.getText();
+            String MatKhau = txt_MatKhau.getText(); // Thông Báo Mật Khẩu Nếu Muốn Đổi Thì Không Được Để Trống
             if (txt_MatKhau.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mật Khẩu.");
                 return;
             }
-            String VaiTro = rdo_Admin.isSelected() ? "Admin" : "Nhân Viên";
-            if ((!rdo_Admin.isSelected() && !rdo_nv.isSelected())) {
+            String VaiTro = rdo_Admin.isSelected() ? "Admin" : "Nhân Viên"; // Khi Muốn Đổi Thì Phải Chọn Một Trong Hai Admin Hoặc Nhân Viên
+            if ((!rdo_Admin.isSelected() && !rdo_nv.isSelected())) { // Không Bao H Được Để Trống Không Chọn
                 JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Vai Trò.");
             }
             boolean vaitro;

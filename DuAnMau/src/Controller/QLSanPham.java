@@ -8,6 +8,7 @@ import Model.SanPham;
 import java.util.ArrayList;
 import java.util.List;
 import java.sql.*;
+import java.util.Date;
 /**
  *
  * @author asus
@@ -44,7 +45,18 @@ public class QLSanPham {
     }
     
     // Get Row Sản Phẩm
-    public void getRow(SanPham sp){
-        
+//    private int MaSP;
+//    private String TenSP;
+//    private float DonGia;
+//    private java.util.Date NgayNhap;
+//    private int MaNV;
+    public Object[] getRow(SanPham sp){
+        int Masp = sp.getMaNV();
+        String Tensp = sp.getTenSP();
+        float DonGia = sp.getDonGia();
+        Date NgayNhap = sp.getNgayNhap();
+        int Manv = sp.getMaNV();
+        Object[] Obj = new Object[] {Masp , Tensp , DonGia , NgayNhap , Manv};
+        return Obj;
     }
 }
