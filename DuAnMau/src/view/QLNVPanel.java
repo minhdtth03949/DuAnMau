@@ -6,10 +6,12 @@ package view;
 
 import Controller.QLNV;
 import Model.NhanVien;
+import java.awt.JobAttributes;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -57,30 +59,56 @@ public class QLNVPanel extends javax.swing.JPanel {
         txt_MatKhau.setText("");
         txt_TimKiem.setText("");
         txt_email.setText("");
-        cbo_VaiTro.setSelectedItem("1");
+        btg_Vai_Tro.clearSelection();
     }
 
     // Thêm Nhân Viên
     public void ThemDL() {
-        int Ma = Integer.parseInt(txt_NhapID.getText());
+        int Ma ;
+        
+        if (txt_NhapID.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mã.");
+            return;
+        }
+        try {
+            Ma = Integer.parseInt(txt_NhapID.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Mã Nhân Viên Phải Là Số Nguyên.");
+            return;
+        }
+        
         String Ten = txt_NhapTen.getText();
+        if (txt_NhapTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tên Nhân Viên.");
+            return;
+        }
         String MatKhau = txt_MatKhau.getText();
+        if (txt_MatKhau.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mật Khẩu.");
+            return;
+        }
         String Email = txt_email.getText();
-        // Gán trực tiếp số vào ComboBox
-        cbo_VaiTro.addItem("1 - Admin");
-        cbo_VaiTro.addItem("0 - Nhân viên");
-
-        // Khi đọc giá trị
-        String chon = cbo_VaiTro.getSelectedItem().toString(); // "1 - Admin"
-        int VaiTro = Integer.parseInt(chon.split(" - ")[0]);   // Tách lấy số 1 hoặc 2
+        if (txt_email.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Email.");
+            return;
+        }
+        String VaiTro = rdo_Admin.isSelected() ? "Admin" : "Nhân Viên";
+        if ((!rdo_Admin.isSelected() && !rdo_nv.isSelected())) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Vai Trò.");
+        }
         boolean vaitro;
-        if (VaiTro == 1) {
+        if (VaiTro.equalsIgnoreCase("Admin")) {
             vaitro = true;
         } else {
             vaitro = false;
         }
-
-        NhanVien nv = new NhanVien(Ma, Ten, MatKhau, Email, vaiTro);
+        NhanVien nv = new NhanVien(Ma, MatKhau, Email, MatKhau, vaitro);
+        int Result = qlnv.ThemNV(nv);
+        if (Result == 1) {
+            JOptionPane.showMessageDialog(this, "Thêm DL Thành  Công.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Có Lỗi Sảy Ra.");
+        }
     }
 
     /**
@@ -94,6 +122,7 @@ public class QLNVPanel extends javax.swing.JPanel {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        btg_Vai_Tro = new javax.swing.ButtonGroup();
         btn_them = new javax.swing.JButton();
         btn_Sua = new javax.swing.JButton();
         btn_Xoa = new javax.swing.JButton();
@@ -102,7 +131,6 @@ public class QLNVPanel extends javax.swing.JPanel {
         btn_Show = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         txt_NhapTen = new javax.swing.JTextField();
-        cbo_VaiTro = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -111,6 +139,8 @@ public class QLNVPanel extends javax.swing.JPanel {
         txt_MatKhau = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txt_NhapID = new javax.swing.JTextField();
+        rdo_Admin = new javax.swing.JRadioButton();
+        rdo_nv = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         txt_TimKiem = new javax.swing.JTextField();
@@ -178,9 +208,6 @@ public class QLNVPanel extends javax.swing.JPanel {
 
         txt_NhapTen.setBackground(new java.awt.Color(255, 204, 204));
 
-        cbo_VaiTro.setBackground(new java.awt.Color(255, 204, 204));
-        cbo_VaiTro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Nhân Viên" }));
-
         jLabel5.setText("Chọn Vai Trò:");
 
         jLabel2.setText("Nhập Tên:");
@@ -196,6 +223,12 @@ public class QLNVPanel extends javax.swing.JPanel {
         jLabel4.setText("Nhập Mật khẩu:");
 
         txt_NhapID.setBackground(new java.awt.Color(255, 204, 204));
+
+        btg_Vai_Tro.add(rdo_Admin);
+        rdo_Admin.setText("Admin");
+
+        btg_Vai_Tro.add(rdo_nv);
+        rdo_nv.setText("Nhân Viên");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -216,14 +249,18 @@ public class QLNVPanel extends javax.swing.JPanel {
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txt_MatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cbo_VaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(txt_NhapID, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)
+                                .addComponent(rdo_Admin, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(34, 34, 34)
+                                .addComponent(rdo_nv))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64)
+                                .addComponent(txt_NhapID, javax.swing.GroupLayout.PREFERRED_SIZE, 455, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(25, Short.MAX_VALUE))
         );
@@ -249,8 +286,9 @@ public class QLNVPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(cbo_VaiTro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(rdo_Admin)
+                    .addComponent(rdo_nv))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Tìm Kiếm"));
@@ -333,7 +371,9 @@ public class QLNVPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
-
+ThemDL();
+LamMoi();
+loadDataToTable();
 
     }//GEN-LAST:event_btn_themActionPerformed
 
@@ -352,12 +392,12 @@ public class QLNVPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btg_Vai_Tro;
     private javax.swing.JButton btn_Show;
     private javax.swing.JButton btn_Sua;
     private javax.swing.JButton btn_TimKiem;
     private javax.swing.JButton btn_Xoa;
     private javax.swing.JButton btn_them;
-    private javax.swing.JComboBox<String> cbo_VaiTro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -369,6 +409,8 @@ public class QLNVPanel extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JRadioButton rdo_Admin;
+    private javax.swing.JRadioButton rdo_nv;
     private javax.swing.JTable tbl_Bang;
     private javax.swing.JTextField txt_MatKhau;
     private javax.swing.JTextField txt_NhapID;
