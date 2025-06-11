@@ -38,6 +38,32 @@ public class QLSPPanel extends javax.swing.JPanel {
             TableModel.addRow(qlsp.getRow(sp));
         }
     }
+    
+    // Làm Mới Sản Phẩm
+    public void LamMoi(){
+        
+    }
+    
+    // Thêm Dữ Liệu Sản Phẩm
+    public void ThemDL(){
+        
+    }
+    
+    // Xoá Dữ Liệu Sản Phẩm
+    public void XoaDL(){
+        
+    }
+    
+    // Sửa Dữ Liệu Sản Phẩm
+    public void SuaDL(){
+        
+    }
+    
+    // Show Detail Sản Phẩm
+    public void ShowDetail(){
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
