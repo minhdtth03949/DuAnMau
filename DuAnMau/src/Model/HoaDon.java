@@ -16,17 +16,15 @@ public class HoaDon {
     private int MaNV;
     private Boolean TrangThai;
     private Date NgayThanhToan;
-    private int GioThanhToan;
 
     public HoaDon() {
     }
 
-    public HoaDon(int MaHD, int MaNV, Boolean TrangThai, Date NgayThanhToan, int GioThanhToan) {
+    public HoaDon(int MaHD, int MaNV, Boolean TrangThai, Date NgayThanhToan) {
         this.MaHD = MaHD;
         this.MaNV = MaNV;
         this.TrangThai = TrangThai;
         this.NgayThanhToan = NgayThanhToan;
-        this.GioThanhToan = GioThanhToan;
     }
 
     public int getMaHD() {
@@ -61,13 +59,5 @@ public class HoaDon {
         this.NgayThanhToan = NgayThanhToan;
     }
 
-    public int getGioThanhToan() {
-        return GioThanhToan;
-    }
-
-    public void setGioThanhToan(int GioThanhToan) {
-        this.GioThanhToan = GioThanhToan;
-    }
-    
     
 }
