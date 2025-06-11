@@ -84,7 +84,6 @@ public class QLBanHang {
             hd.setMaNV(rs.getInt(2));
             hd.setTrangThai(rs.getBoolean(3));
             hd.setNgayThanhToan(rs.getDate(4));
-            hd.setGioThanhToan(rs.getInt(5)); // Giả định GioThanhToan là int (cần điều chỉnh nếu dùng Time)
             lst.add(hd);
         }
         rs.close();
@@ -121,13 +120,12 @@ public class QLBanHang {
 
     public boolean ThemHoaDon(HoaDon hd) throws ClassNotFoundException, SQLException {
         mc = new MyConnection();
-        String query = "INSERT INTO HoaDon (MaNV, TrangThai, NgayThanhToan, GioThanhToan) VALUES (?, ?, ?, ?)";
+        String query = "INSERT INTO HoaDon (MaNV, TrangThai, NgayThanhToan) VALUES (?, ?, ?, ?)";
         Connection conn = mc.DBConnect();
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setInt(1, hd.getMaNV());
         stmt.setBoolean(2, hd.getTrangThai());
         stmt.setDate(3, new java.sql.Date(hd.getNgayThanhToan().getTime()));
-        stmt.setInt(4, hd.getGioThanhToan()); // Cần điều chỉnh nếu dùng Time
         int rowAdded = stmt.executeUpdate();
         return rowAdded > 0;
     }
@@ -163,7 +161,7 @@ public class QLBanHang {
 
     public boolean UpdateHoaDon(int maHD, boolean trangThai, Date ngayThanhToan, int gioThanhToan) throws ClassNotFoundException, SQLException {
         mc = new MyConnection();
-        String query = "UPDATE HoaDon SET TrangThai = ?, NgayThanhToan = ?, GioThanhToan = ? WHERE MaHD = ?";
+        String query = "UPDATE HoaDon SET TrangThai = ?, NgayThanhToan = ? WHERE MaHD = ?";
         Connection conn = mc.DBConnect();
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setBoolean(1, trangThai);
