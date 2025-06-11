@@ -23,20 +23,23 @@ public class QLNV {
     }
 
     // Get All Nhân Viên
-    public List<NhanVien> getAll() throws SQLException, ClassNotFoundException {
+    public List<NhanVien> getAll() {
         List<NhanVien> listNV = new ArrayList<NhanVien>();
         String query = "SELECT * FROM NHANVIEN";
-        Connection connect = conn.DBConnect();
-        Statement stmt = connect.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        while (rs.next()) {
-            NhanVien nv = new NhanVien();
-            nv.setMaNV(rs.getInt(1));
-            nv.setTenDangNhap(rs.getString(2));
-            nv.setEmail(rs.getString(3));
-            nv.setMatKhau(rs.getString(4));
-            nv.setVaiTro(rs.getBoolean(5));
-            listNV.add(nv);
+        try {
+            Connection connect = conn.DBConnect();
+            Statement stmt = connect.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getInt(1));
+                nv.setTenDangNhap(rs.getString(2));
+                nv.setEmail(rs.getString(3));
+                nv.setMatKhau(rs.getString(4));
+                nv.setVaiTro(rs.getBoolean(5));
+                listNV.add(nv);
+            }
+        } catch (Exception e) {
         }
         return listNV;
     }
@@ -47,9 +50,8 @@ public class QLNV {
         String Tendn = nv.getTenDangNhap();
         String Email = nv.getEmail();
         String MatKhau = nv.getMatKhau();
-        Boolean VaiTro = nv.getVaiTro();
-
-        Object[] obj = new Object[]{Manv, Tendn, MatKhau, VaiTro};
+        String vaiTroStr = nv.getVaiTro() ? "Admin" : "Nhân Viên"; // Chuyển đổi boolean -> text
+        Object[] obj = new Object[]{Manv, Tendn, Email, MatKhau, vaiTroStr};
         return obj;
     }
 
@@ -101,39 +103,44 @@ public class QLNV {
         try {
             Connection con = conn.DBConnect();
             PreparedStatement pstm = con.prepareStatement(sql);
-            pstm.setInt(1 , nv.getMaNV());
+            pstm.setInt(1, nv.getMaNV());
             pstm.setString(2, nv.getTenDangNhap());
             pstm.setString(3, nv.getEmail());
             pstm.setString(4, nv.getMatKhau());
             pstm.setBoolean(5, nv.getVaiTro());
             pstm.setInt(6, Theoma);
             if (pstm.executeUpdate() > 0) {
-                System.out.println("Sua. Connect"); 
+                System.out.println("Sua. Connect");
                 return 1;
-           }
+            }
         } catch (Exception e) {
         }
         return 0;
     }
+
     // Tìm Kiếm Theo Mã Nhân Viên
-    public List<NhanVien> TimKiem(int TheoMa) throws SQLException, ClassNotFoundException {
+    public List<NhanVien> TimKiem(int TheoMa) {
         List<NhanVien> listNV = new ArrayList<NhanVien>();
         String query = "SELECT * FROM NHANVIEN";
-        Connection connect = conn.DBConnect();
-        Statement stmt = connect.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-        while (rs.next()) {
-            NhanVien nv = new NhanVien();
-            nv.setMaNV(rs.getInt(1));
-            nv.setTenDangNhap(rs.getString(2));
-            nv.setEmail(rs.getString(3));
-            nv.setMatKhau(rs.getString(4));
-            nv.setVaiTro(rs.getBoolean(5));
-            if (nv.getMaNV() == TheoMa) {
-                System.out.println("Tim Kiem. Connect");
-                listNV.add(nv); 
-            }           
+        try {
+            Connection connect = conn.DBConnect();
+            Statement stmt = connect.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                NhanVien nv = new NhanVien();
+                nv.setMaNV(rs.getInt(1));
+                nv.setTenDangNhap(rs.getString(2));
+                nv.setEmail(rs.getString(3));
+                nv.setMatKhau(rs.getString(4));
+                nv.setVaiTro(rs.getBoolean(5));
+                if (nv.getMaNV() == TheoMa) {
+                    System.out.println("Tim Kiem. Connect");
+                    listNV.add(nv);
+                }
+            }
+        } catch (Exception e) {
         }
+
         return listNV;
     }
 }

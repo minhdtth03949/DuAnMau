@@ -30,25 +30,21 @@ public class QLNVPanel extends javax.swing.JPanel {
     public QLNVPanel() {
         qlnv = new QLNV();
         initComponents();
-        loadDataToTable();
+        Initable();
+        FillToTable();
     }
 
-    private void loadDataToTable() {
-        try {
-            List<NhanVien> listNV = qlnv.getAll();
-            DefaultTableModel model = (DefaultTableModel) tbl_Bang.getModel();
-            model.setRowCount(0);
-            for (NhanVien nv : listNV) {
-                model.addRow(new Object[]{
-                    nv.getMaNV(),
-                    nv.getTenDangNhap(),
-                    nv.getEmail(),
-                    nv.getMatKhau(),
-                    nv.getVaiTro() ? "Admin" : "Nhân viên"
-                });
-            }
-        } catch (SQLException | ClassNotFoundException ex) {
-            Logger.getLogger(QLNVPanel.class.getName()).log(Level.SEVERE, null, ex);
+    public void Initable() {
+        TableModel = new DefaultTableModel();
+        String[] cols = {"Mã Nhân Viên", "Tên Nhân Viên", "Email", "Mật Khẩu", "Vai Trò"};
+        TableModel.setColumnIdentifiers(cols);
+        tbl_Bang.setModel(TableModel);
+    }
+
+    public void FillToTable() {
+        TableModel.setRowCount(0);
+        for (NhanVien nv : qlnv.getAll()) {
+            TableModel.addRow(qlnv.getRow(nv));
         }
     }
 
@@ -64,50 +60,148 @@ public class QLNVPanel extends javax.swing.JPanel {
 
     // Thêm Nhân Viên
     public void ThemDL() {
-        int Ma ;
-        
+        int Ma;       // Tạo Biến Đã Bao Gồm Cả Check Mã Theo Kiểu Nếu Mà Trống Thì Thông Báo Để Nhập Lại.
         if (txt_NhapID.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mã.");
             return;
         }
         try {
-            Ma = Integer.parseInt(txt_NhapID.getText());
+            Ma = Integer.parseInt(txt_NhapID.getText()); // Thông Báo Cho Người Dùng Mã Nhân Viên Phải Là Số Nguyên.
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Mã Nhân Viên Phải Là Số Nguyên.");
             return;
         }
-        
-        String Ten = txt_NhapTen.getText();
+
+        String Ten = txt_NhapTen.getText(); // Check Tên Nhân Viên Đã Điền Đầy Đủ Chưa.
         if (txt_NhapTen.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tên Nhân Viên.");
             return;
         }
-        String MatKhau = txt_MatKhau.getText();
+        String MatKhau = txt_MatKhau.getText(); // Check Mật Khẩu Có Để Trống Không.
         if (txt_MatKhau.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mật Khẩu.");
             return;
         }
-        String Email = txt_email.getText();
+        String Email = txt_email.getText(); // Check Email Người Dùng Không Được Để Chống.
         if (txt_email.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Email.");
             return;
         }
-        String VaiTro = rdo_Admin.isSelected() ? "Admin" : "Nhân Viên";
+        String VaiTro = rdo_Admin.isSelected() ? "Admin" : "Nhân Viên"; // Người Dùng Bắt Buộc Phải Chọn Một Trong Hai Là Nhân Viên Hoặc Là Admin.
         if ((!rdo_Admin.isSelected() && !rdo_nv.isSelected())) {
             JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Vai Trò.");
         }
-        boolean vaitro;
+        boolean vaitro; // Vì Vai Trò Lưu Ở Nhân Viên Là Biến Boolean Nên Thêm Dữ Liệu Phải Thay Đổi
         if (VaiTro.equalsIgnoreCase("Admin")) {
-            vaitro = true;
+            vaitro = true; // Nếu Vai Trò Ở Dao Diện Chọn Là Admin Thì Vai Trò Sẽ Là True
         } else {
-            vaitro = false;
+            vaitro = false; // Ngược Lại Dao Diện Là Nhân Viên Thì Vai Trf Sẽ Thành False
         }
         NhanVien nv = new NhanVien(Ma, MatKhau, Email, MatKhau, vaitro);
         int Result = qlnv.ThemNV(nv);
-        if (Result == 1) {
+        if (Result == 1) { // Nếu Result Bằng 1 Thì Sẽ Thêm Dược Dữ Liệu Nhân Viên Thành Công.
             JOptionPane.showMessageDialog(this, "Thêm DL Thành  Công.");
-        } else {
+        } else { // Cong Không Thì Sẽ Thông Báo Lỗi Cho Người Dùng Kiểm Tra Lại
             JOptionPane.showMessageDialog(this, "Có Lỗi Sảy Ra.");
+        }
+    }
+
+    // Xoá Dữ Liệu Nhân Viên
+    public void XoaDL() {
+        index = tbl_Bang.getSelectedRow(); // Lấy Mã Theo Vị Trí Trong Bảng
+        if (index >= 0) {
+            int Choice = JOptionPane.showConfirmDialog(this, "Bạn Có Muốn Xoá Nhân Viên Này Không ?", "Xác Nhận Xoá: ", JOptionPane.YES_NO_OPTION);
+            if (Choice == JOptionPane.YES_OPTION) { // Khi Người Dùng Chọn Xoá Thì Xẽ Được Thông Báo Có Sác Nhận Hay Không
+                // Nếu Xác Nhận Thì Ấn Xoá.
+                NhanVien nv = qlnv.getAll().get(index);
+                int Ma = nv.getMaNV(); // Lấy Mã Để Xoá.
+                int Result = qlnv.XoaNV(Ma);
+                if (Result == 1) {
+                    JOptionPane.showMessageDialog(this, "Xoá Nhân Viên Thành Công.");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Nhân Viên Để Xoá.");
+        }
+    }
+
+    // Sửa Dữ Liệu Liên Quan Đến Thông Tin Của Nhân Viên.
+    public void SuaDL() {
+        index = tbl_Bang.getSelectedRow();
+        if (index >= 0) {
+            int MaCu = qlnv.getAll().get(index).getMaNV(); // Lấy Dữ Liệu Mã Cũ Của Nhân Viên 
+
+            int MaMoi;// Nếu Muốn Đổi Mã Còn Không Thì Vẫn Lẫy Mã Cũ
+            if (txt_NhapID.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mã.");
+                return;
+            }
+            try {
+                MaMoi = Integer.parseInt(txt_NhapID.getText()); // Thông Báo Cho Người Dùng Mã Nhân Viên Phải Là Số Nguyên.
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Mã Nhân Viên Phải Là Số Nguyên.");
+                return;
+            }
+            String Tennv = txt_NhapTen.getText();
+            if (txt_NhapTen.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tên Nhân Viên.");
+                return;
+            }
+            String Email = txt_email.getText();
+            if (txt_email.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Email.");
+                return;
+            }
+            String MatKhau = txt_MatKhau.getText();
+            if (txt_MatKhau.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mật Khẩu.");
+                return;
+            }
+            String VaiTro = rdo_Admin.isSelected() ? "Admin" : "Nhân Viên";
+            if ((!rdo_Admin.isSelected() && !rdo_nv.isSelected())) {
+                JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Vai Trò.");
+            }
+            boolean vaitro;
+            if (VaiTro.equalsIgnoreCase("Admin")) {
+                vaitro = true;
+            } else {
+                vaitro = false;
+            }
+            NhanVien nv = new NhanVien(MaCu, Tennv, Email, MatKhau, vaitro);
+
+            int Result = qlnv.SuaDL(nv, MaCu);
+            if (Result == 1) {
+                JOptionPane.showMessageDialog(this, "Sửa Dữ Liệu Nhân Viên Thành Công.");
+            } else {
+                JOptionPane.showMessageDialog(this, "Vui Lòng Chọn Dữ Liệu Nhâ Viên Để Sửa");
+            }
+        }
+    }
+
+    // Showdetail Giúp Xem Chi Tiết Thông Tin Của Một Nhân Viên Chỉ Định Trong Bảng.
+    public void Showdetail() {
+        index = tbl_Bang.getSelectedRow();
+        if (index >= 0) {
+            NhanVien nv = qlnv.getAll().get(index);
+
+            txt_NhapID.setText(String.valueOf(nv.getMaNV()));
+            txt_NhapTen.setText(nv.getTenDangNhap());
+            txt_email.setText(nv.getEmail());
+            txt_MatKhau.setText(nv.getMatKhau());
+            boolean vaitro = nv.getVaiTro();
+            if (vaitro == true) {
+                rdo_Admin.setSelected(true);
+            } else {
+                rdo_nv.setSelected(true);
+            }
+        }
+    }
+
+    public void TimKiem() { // Tìm Kiếm Theo Mã Nhân Viên
+        TableModel.setRowCount(0); // Set Bảng Về Vị Trí Trống
+        int TheoMa = Integer.valueOf(txt_TimKiem.getText());
+        for (NhanVien nv : qlnv.TimKiem(TheoMa)) {
+            TableModel.addRow(qlnv.getRow(nv));
         }
     }
 
@@ -194,6 +288,11 @@ public class QLNVPanel extends javax.swing.JPanel {
                 "id", "Ten", "Email", "MatKhau", "VaiTro"
             }
         ));
+        tbl_Bang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbl_BangMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbl_Bang);
 
         btn_Show.setBackground(new java.awt.Color(204, 255, 204));
@@ -300,6 +399,11 @@ public class QLNVPanel extends javax.swing.JPanel {
         btn_TimKiem.setBackground(new java.awt.Color(204, 255, 204));
         btn_TimKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icon/search.png"))); // NOI18N
         btn_TimKiem.setText("Tìm Kiếm");
+        btn_TimKiem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_TimKiemActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -362,33 +466,49 @@ public class QLNVPanel extends javax.swing.JPanel {
                                 .addComponent(btn_Xoa, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(29, 29, 29)
                         .addComponent(btn_Sua, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_themActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_themActionPerformed
-ThemDL();
-LamMoi();
-loadDataToTable();
-
+        ThemDL();
+        LamMoi();
+        FillToTable();
     }//GEN-LAST:event_btn_themActionPerformed
 
     private void btn_SuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_SuaActionPerformed
         // TODO add your handling code here:
+        SuaDL();
+        LamMoi();
+        FillToTable();
     }//GEN-LAST:event_btn_SuaActionPerformed
 
     private void btn_XoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_XoaActionPerformed
         // TODO add your handling code here:
+        XoaDL();
+        LamMoi();
+        FillToTable();
     }//GEN-LAST:event_btn_XoaActionPerformed
 
     private void btn_ShowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ShowActionPerformed
 
-        loadDataToTable();
+        FillToTable();
     }//GEN-LAST:event_btn_ShowActionPerformed
+
+    private void tbl_BangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbl_BangMouseClicked
+        // TODO add your handling code here:
+        Showdetail();
+        FillToTable();
+    }//GEN-LAST:event_tbl_BangMouseClicked
+
+    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
+        // TODO add your handling code here:
+        TimKiem();
+    }//GEN-LAST:event_btn_TimKiemActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

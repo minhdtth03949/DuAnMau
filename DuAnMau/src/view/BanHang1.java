@@ -4,7 +4,7 @@
  */
 package view;
 
-import COntroller.QuanLyBanHang;
+import Controller.QuanLyBanHang;
 import Model.ChiTietHoaDon;
 import Model.ChiTietSanPham;
 import Model.HoaDon;
