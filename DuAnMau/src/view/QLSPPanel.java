@@ -7,14 +7,20 @@ package view;
 import javax.swing.table.DefaultTableModel;
 import Model.SanPham;
 import Controller.QLSanPham;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
  */
 public class QLSPPanel extends javax.swing.JPanel {
+
     DefaultTableModel TableModel;
     int index = -1;
     QLSanPham qlsp = new QLSanPham();
+
     /**
      * Creates new form QLSPPanel
      */
@@ -24,46 +30,112 @@ public class QLSPPanel extends javax.swing.JPanel {
         FilltoTable();
     }
 
-    
-    public void Initable(){
+    public void Initable() {
         TableModel = new DefaultTableModel();
-        String[] cols = {"Mã Sản Phẩm" , "Tên Sản Phẩm" , "Đơn Giá" , "Ngày Nhập" , "Mã Nhân Viên"};
+        String[] cols = {"Mã Sản Phẩm", "Tên Sản Phẩm", "Đơn Giá", "Ngày Nhập", "Mã Nhân Viên"};
         TableModel.setColumnIdentifiers(cols);
         tbl_QLSP.setModel(TableModel);
     }
-    
-    public void FilltoTable(){
+
+    public void FilltoTable() {
         TableModel.setRowCount(0);
         for (SanPham sp : qlsp.getAll()) {
             TableModel.addRow(qlsp.getRow(sp));
         }
     }
-    
+
     // Làm Mới Sản Phẩm
-    public void LamMoi(){
-        
+    public void LamMoi() {
+        txt_NhapMasp.setText("");
+        txt_GiaTien.setText("");
+        txt_NgayNhap.setText("");
+        txt_NhapTen.setText("");
+        txt_Manv.setText("");
+        txt_TimKiem.setText("");
+        FilltoTable();
     }
-    
+
     // Thêm Dữ Liệu Sản Phẩm
-    public void ThemDL(){
+    public void ThemDL() {
+        int Masp;
+        if (txt_NhapMasp.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mã Sản Phẩm.");
+            return;
+        }
+        try {
+            Masp = Integer.valueOf(txt_NhapMasp.getText());
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Mã Sản Phẩm Phải Là Số.");
+            return;
+        }
+
+        String Tensp = txt_NhapTen.getText();
+        if (txt_NhapTen.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Tên Sản Phẩm.");
+            return;
+        }
+
+        float DonGia = Float.valueOf(txt_GiaTien.getText());
+        if (txt_GiaTien.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Đơn Giá Cho Sản Phẩm.");
+            return;
+        }
+
         
+        
+        String NgayNhap;
+        // Bắt Đầu Ngày Nhập
+        try {
+            String[] parts = txt_NgayNhap.getText().split(" - ");
+            if (parts.length != 3) {
+                throw new Exception();
+            }
+
+            NgayNhap = parts[0].trim() + "-" + parts[1].trim() + "-" + parts[2].trim();
+
+            SimpleDateFormat yymmdd = new SimpleDateFormat("yyyy-MM-dd");
+            java.sql.Date sqlDate = new java.sql.Date(yymmdd.parse(NgayNhap).getTime());
+
+            // Dùng sqlDate trong câu INSERT
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Vui lòng nhập ngày theo định dạng: yyyy - mm - dd");
+        }
+        // Hết Ngày Nhập
+        
+        
+        
+        //Mã Nhân Viên
+        int Manv;
+        if (txt_Manv.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Vui Lòng Nhập Mã Nhân Viên Thêm Sản Phẩm.");
+            return;
+        }
+        try {
+            Manv = Integer.valueOf(txt_Manv.getText());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Mã Nhân Viên Phải Là Số Nguyên.");
+            return;
+        }
+
+        SanPham sp = new SanPham(Masp, Tensp, DonGia, NgayNhap , Manv);
     }
-    
+
     // Xoá Dữ Liệu Sản Phẩm
-    public void XoaDL(){
-        
+    public void XoaDL() {
+
     }
-    
+
     // Sửa Dữ Liệu Sản Phẩm
-    public void SuaDL(){
-        
+    public void SuaDL() {
+
     }
-    
+
     // Show Detail Sản Phẩm
-    public void ShowDetail(){
-        
+    public void ShowDetail() {
+
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -77,14 +149,14 @@ public class QLSPPanel extends javax.swing.JPanel {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        txt_NgayDK = new javax.swing.JTextField();
+        txt_NgayNhap = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         txt_Manv = new javax.swing.JTextField();
         txt_NhapTen = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txt_NhapMa = new javax.swing.JTextField();
+        txt_NhapMasp = new javax.swing.JTextField();
         txt_GiaTien = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnThem1 = new javax.swing.JButton();
@@ -114,7 +186,7 @@ public class QLSPPanel extends javax.swing.JPanel {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Quản Lý Sản Phẩm"));
 
-        txt_NgayDK.setBackground(new java.awt.Color(255, 255, 204));
+        txt_NgayNhap.setBackground(new java.awt.Color(255, 255, 204));
 
         jLabel5.setText("Mã Nhân Viên:");
 
@@ -128,11 +200,11 @@ public class QLSPPanel extends javax.swing.JPanel {
 
         jLabel3.setText("Giá Tiền:");
 
-        txt_NhapMa.setBackground(new java.awt.Color(255, 255, 204));
+        txt_NhapMasp.setBackground(new java.awt.Color(255, 255, 204));
 
         txt_GiaTien.setBackground(new java.awt.Color(255, 255, 204));
 
-        jLabel4.setText("Ngày Đăng Ký:");
+        jLabel4.setText("Ngày Nhập:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -149,9 +221,9 @@ public class QLSPPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txt_Manv, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_NgayDK, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_NgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_NhapTen, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txt_NhapMa, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_NhapMasp, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txt_GiaTien, javax.swing.GroupLayout.PREFERRED_SIZE, 302, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(32, Short.MAX_VALUE))
         );
@@ -165,7 +237,7 @@ public class QLSPPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(txt_NhapMa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_NhapMasp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -173,7 +245,7 @@ public class QLSPPanel extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txt_NgayDK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_NgayNhap, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -307,8 +379,8 @@ public class QLSPPanel extends javax.swing.JPanel {
     private javax.swing.JTable tbl_QLSP;
     private javax.swing.JTextField txt_GiaTien;
     private javax.swing.JTextField txt_Manv;
-    private javax.swing.JTextField txt_NgayDK;
-    private javax.swing.JTextField txt_NhapMa;
+    private javax.swing.JTextField txt_NgayNhap;
+    private javax.swing.JTextField txt_NhapMasp;
     private javax.swing.JTextField txt_NhapTen;
     private javax.swing.JTextField txt_TimKiem;
     // End of variables declaration//GEN-END:variables

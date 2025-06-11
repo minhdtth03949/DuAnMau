@@ -127,9 +127,9 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="txt_Manv" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
-                      <Component id="txt_NgayDK" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
+                      <Component id="txt_NgayNhap" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
                       <Component id="txt_NhapTen" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
-                      <Component id="txt_NhapMa" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
+                      <Component id="txt_NhapMasp" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
                       <Component id="txt_GiaTien" alignment="0" min="-2" pref="302" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="32" max="32767" attributes="0"/>
@@ -147,7 +147,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_NhapMa" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_NhapMasp" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -157,7 +157,7 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txt_NgayDK" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txt_NgayNhap" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -170,7 +170,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JTextField" name="txt_NgayDK">
+        <Component class="javax.swing.JTextField" name="txt_NgayNhap">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="ff" red="ff" type="rgb"/>
@@ -211,7 +211,7 @@
             <Property name="text" type="java.lang.String" value="Gi&#xe1; Ti&#x1ec1;n:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txt_NhapMa">
+        <Component class="javax.swing.JTextField" name="txt_NhapMasp">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="cc" green="ff" red="ff" type="rgb"/>
@@ -227,7 +227,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Ng&#xe0;y &#x110;&#x103;ng K&#xfd;:"/>
+            <Property name="text" type="java.lang.String" value="Ng&#xe0;y Nh&#x1ead;p:"/>
           </Properties>
         </Component>
       </SubComponents>
