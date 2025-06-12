@@ -103,6 +103,7 @@ public class BanHang1 extends javax.swing.JPanel {
             modelChiTietHoaDon.addRow(qlbh.getRowChiTietHoaDon(cthd));
         }
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -285,7 +286,64 @@ public class BanHang1 extends javax.swing.JPanel {
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
+        int rowSP = tblSanPham.getSelectedRow();
+        int rowCTSP = tblChiTietSanPham.getSelectedRow();
 
+        if (rowSP == -1 || rowCTSP == -1) {
+            JOptionPane.showMessageDialog(this, "Vui lòng chọn 1 sản phẩm và 1 chi tiết sản phẩm.");
+            return;
+        }
+
+        try {
+            // Lấy thông tin sản phẩm
+            int maSP = Integer.parseInt(tblSanPham.getValueAt(rowSP, 0).toString());
+            String tenSP = tblSanPham.getValueAt(rowSP, 1).toString();
+            double donGia = Double.parseDouble(tblSanPham.getValueAt(rowSP, 2).toString());
+
+            // Lấy thông tin chi tiết sản phẩm
+            int maCTSP = Integer.parseInt(tblChiTietSanPham.getValueAt(rowCTSP, 0).toString());
+
+            // Tạo mã hóa đơn mới
+            int newMaHD = qlbh.getMaxMaHD() + 1;
+            int maNV = Integer.parseInt(tblSanPham.getValueAt(rowSP, 4).toString());
+            boolean trangThai = true;
+            java.sql.Date ngayThanhToan = new java.sql.Date(System.currentTimeMillis());
+
+            // Tạo hóa đơn
+            HoaDon hd = new HoaDon(newMaHD, maNV, trangThai, ngayThanhToan);
+            boolean taoHD = qlbh.ThemHoaDon(hd);
+
+            if (!taoHD) {
+                JOptionPane.showMessageDialog(this, "Không thể tạo hóa đơn.");
+                return;
+            }
+
+            // Tính giá khuyến mãi (nếu có logic KM, tạm để đơn giản)
+            double GiaApDungMaKM = donGia * 0.9; // giảm 10%
+            boolean trangThaiCT = true;
+
+            // Tạo chi tiết hóa đơn
+            ChiTietHoaDon cthd = new ChiTietHoaDon();
+            cthd.setMaHD(newMaHD);
+            cthd.setMaCTSP(maCTSP);
+            cthd.setDonGia((float) donGia);
+            cthd.setGiaApDungMaKM((float) GiaApDungMaKM);
+            cthd.setTrangThai(trangThaiCT);
+
+            boolean taoCTHD = qlbh.themChiTiet(cthd);
+
+            if (taoCTHD) {
+                JOptionPane.showMessageDialog(this, "Tạo hóa đơn + chi tiết thành công!");
+                 FilltoTableHoaDon();
+            FilltoTableChiTietHoaDon();
+            } else {
+                JOptionPane.showMessageDialog(this, "Tạo hóa đơn thành công nhưng thêm chi tiết thất bại.");
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Lỗi: " + ex.getMessage());
+        }
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
     private void btnThemSPVaoHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPVaoHDActionPerformed

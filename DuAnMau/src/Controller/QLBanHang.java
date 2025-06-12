@@ -11,12 +11,13 @@ import Model.SanPham;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *
  * @author asus
  */
 public class QLBanHang {
-    
+
     MyConnection conn;
 
     public QLBanHang() {
@@ -84,7 +85,7 @@ public class QLBanHang {
         }
         return listHD;
     }
-    
+
     public List<ChiTietHoaDon> getAllChiTietHoaDon() throws ClassNotFoundException {
         List<ChiTietHoaDon> listCTHD = new ArrayList<>();
         String query = "SELECT * FROM ChiTietHoaDon";
@@ -112,7 +113,7 @@ public class QLBanHang {
         }
         return listCTHD;
     }
-    
+
     public List<ChiTietSanPham> getAllChiTietSanPham() throws ClassNotFoundException {
         List<ChiTietSanPham> listCTSP = new ArrayList<>();
         String query = "SELECT * FROM ChiTietSanPham";
@@ -253,6 +254,37 @@ public class QLBanHang {
         }
     }
 
+    public boolean themChiTiet(ChiTietHoaDon cthd) throws SQLException, ClassNotFoundException {
+        String query = "INSERT INTO CHITIETHOADON (MaHD, MaCTSP, DonGia, GiaKM, TrangThai) VALUES (?, ?, ?, ?, ?)";
+        Connection connect = conn.DBConnect();
+        PreparedStatement stmt = connect.prepareStatement(query);
+        stmt.setInt(1, cthd.getMaHD());
+        stmt.setInt(2, cthd.getMaCTSP());
+        stmt.setDouble(3, cthd.getDonGia());
+        stmt.setDouble(4, cthd.getGiaApDungMaKM());
+        stmt.setBoolean(5, cthd.getTrangThai());
+
+        int rows = stmt.executeUpdate();
+        stmt.close();
+        connect.close();
+        return rows > 0;
+    }
+
+    public int getMaxMaHD() throws SQLException, ClassNotFoundException {
+        String query = "SELECT ISNULL(MAX(MaHD), 0) FROM HOADON";
+        Connection connect = conn.DBConnect();
+        PreparedStatement stmt = connect.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
+        int max = 0;
+        if (rs.next()) {
+            max = rs.getInt(1);
+        }
+        rs.close();
+        stmt.close();
+        connect.close();
+        return max;
+    }
+
     // Thêm chi tiết hóa đơn
     public boolean ThemChiTietHD(ChiTietHoaDon cthd) throws ClassNotFoundException {
         String query = "INSERT INTO CHITIETHOADON (MaCTHD, MaHD, MaKM, MaCTSP, TenSP, DonGia, GiaApDungMaKM, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -341,5 +373,5 @@ public class QLBanHang {
             return false;
         }
     }
-    
+
 }
