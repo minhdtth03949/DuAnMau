@@ -149,7 +149,15 @@ public class TrangChu extends javax.swing.JFrame {
 
     private void btnBanHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanHangActionPerformed
         // TODO add your handling code here:
-        
+        BanHang1 p3 = new BanHang1();
+        p3.setSize(987, 583); // kichs thuoc = panel goc
+        p3.setLocation(0, 0);
+
+        //b2: de panel vao form
+        jPanel1.removeAll();//xoa panel hien tai dang hien thi
+        jPanel1.add(p3, BorderLayout.CENTER);//add them panel moi, hien thi o giua
+        jPanel1.repaint();
+        jPanel1.revalidate();
     }//GEN-LAST:event_btnBanHangActionPerformed
 
     /**

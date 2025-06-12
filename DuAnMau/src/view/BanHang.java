@@ -37,6 +37,8 @@ public class BanHang extends javax.swing.JFrame {
             Initable();
             FilltoTableSanPham();
             FilltoTableHoaDon();
+            FilltoTableChiTietHoaDon();
+            FilltoTableChiTietSanPham();
 
         } catch (Exception ex) {
             Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
@@ -84,17 +86,17 @@ public class BanHang extends javax.swing.JFrame {
     }
 
     // Tải dữ liệu lên bảng chi tiết sản phẩm
-    private void FilltoTableChiTietSanPham(int maSP) throws ClassNotFoundException {
+    private void FilltoTableChiTietSanPham() throws ClassNotFoundException {
         modelChiTietSanPham.setRowCount(0);
-        for (ChiTietSanPham ctsp : qlbh.getChiTietSanPham(maSP)) {
+        for (ChiTietSanPham ctsp : qlbh.getAllChiTietSanPham()) {
             modelChiTietSanPham.addRow(qlbh.getRowChiTietSanPham(ctsp));
         }
     }
 
     // Tải dữ liệu lên bảng chi tiết hóa đơn
-    private void FilltoTableChiTietHoaDon(int maHD) throws ClassNotFoundException {
+    private void FilltoTableChiTietHoaDon() throws ClassNotFoundException {
         modelChiTietHoaDon.setRowCount(0);
-        for (ChiTietHoaDon cthd : qlbh.getAllChiTietHoaDon(maHD)) {
+        for (ChiTietHoaDon cthd : qlbh.getAllChiTietHoaDon()) {
             modelChiTietHoaDon.addRow(qlbh.getRowChiTietHoaDon(cthd));
         }
     }

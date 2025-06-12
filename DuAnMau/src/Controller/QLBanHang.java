@@ -84,6 +84,60 @@ public class QLBanHang {
         }
         return listHD;
     }
+    
+    public List<ChiTietHoaDon> getAllChiTietHoaDon() throws ClassNotFoundException {
+        List<ChiTietHoaDon> listCTHD = new ArrayList<>();
+        String query = "SELECT * FROM ChiTietHoaDon";
+        try {
+            Connection connect = conn.DBConnect();
+            Statement stmt = connect.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                ChiTietHoaDon cthd = new ChiTietHoaDon();
+                cthd.setMaCTHD(rs.getInt("MaCTHD"));
+                cthd.setMaHD(rs.getInt("MaHD"));
+                cthd.setMaKM(rs.getInt("MaKM"));
+                cthd.setMaCTSP(rs.getInt("MaCTSP"));
+                cthd.setTenSP(rs.getString("TenSP"));
+                cthd.setDonGia(rs.getFloat("DonGia"));
+                cthd.setGiaApDungMaKM(rs.getFloat("GiaApDungMaKM"));
+                cthd.setTrangThai(rs.getBoolean("TrangThai"));
+                listCTHD.add(cthd);
+            }
+            rs.close();
+            stmt.close();
+            connect.close();
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy danh sách hóa đơn: " + e.getMessage());
+        }
+        return listCTHD;
+    }
+    
+    public List<ChiTietSanPham> getAllChiTietSanPham() throws ClassNotFoundException {
+        List<ChiTietSanPham> listCTSP = new ArrayList<>();
+        String query = "SELECT * FROM ChiTietSanPham";
+        try {
+            Connection connect = conn.DBConnect();
+            Statement stmt = connect.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                ChiTietSanPham ctsp = new ChiTietSanPham();
+                ctsp.setMaCTSP(rs.getInt("MaCTSP"));
+                ctsp.setMaSP(rs.getInt("MaSP"));
+                ctsp.setTenSP(rs.getString("TenSP"));
+                ctsp.setDonGia(rs.getFloat("DonGia"));
+                ctsp.setNgayNhap(rs.getDate("NgayNhap"));
+                ctsp.setHanSD(rs.getDate("HanSD"));
+                listCTSP.add(ctsp);
+            }
+            rs.close();
+            stmt.close();
+            connect.close();
+        } catch (SQLException e) {
+            System.err.println("Lỗi khi lấy danh sách hóa đơn: " + e.getMessage());
+        }
+        return listCTSP;
+    }
 
     // Lấy hàng hóa đơn
     public Object[] getRowHoaDon(HoaDon hd) {
@@ -136,7 +190,7 @@ public class QLBanHang {
     }
 
     // Lấy chi tiết hóa đơn theo mã hóa đơn
-    public List<ChiTietHoaDon> getAllChiTietHoaDon(int maHD) throws ClassNotFoundException {
+    public List<ChiTietHoaDon> getChiTietHoaDon(int maHD) throws ClassNotFoundException {
         List<ChiTietHoaDon> listCTHD = new ArrayList<>();
         String query = "SELECT * FROM CHITIETHOADON WHERE MaHD = ?";
         try {
