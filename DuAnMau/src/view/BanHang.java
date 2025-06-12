@@ -23,91 +23,7 @@ public class BanHang extends javax.swing.JFrame {
      * Creates new form BanHang
      */
     
-    QLBanHang qlbh = new QLBanHang();
-    int maSP, rowIndexSP, maCTSP, maHD, rowIndexHD, rowIndexCTHD, maCTHD;
-    float donGia;
-
-    public BanHang() throws ClassNotFoundException, SQLException {
-        initComponents();
-        LoadSanPham();
-        LoadHoaDon();
-    }
-    
-    public void LoadSanPham() throws ClassNotFoundException, SQLException {
-        DefaultTableModel model = new DefaultTableModel();
-        model.setRowCount(0);
-        model.setColumnCount(5);
-        String[] columns = {"Mã SP", "Tên SP", "Đơn Giá", "Ngày Nhập", "Mã NV"};
-        model.setColumnIdentifiers(columns);
-        for (SanPham sp : qlbh.getAllSanPham()) {
-            model.addRow(new Object[]{
-                sp.getMaSP(),
-                sp.getTenSP(),
-                sp.getDonGia(),
-                sp.getNgayNhap(),
-                sp.getMaNV()
-            });
-        }
-        tblSanPham.setModel(model);
-    }
-
-    public void LoadHoaDon() throws ClassNotFoundException, SQLException {
-        DefaultTableModel model = new DefaultTableModel();
-        model.setRowCount(0);
-        model.setColumnCount(5);
-        String[] columns = {"Mã HD", "Mã NV", "Trạng Thái", "Ngày Thanh Toán", "Giờ Thanh Toán"};
-        model.setColumnIdentifiers(columns);
-        for (HoaDon hd : qlbh.getAllHoaDon()) {
-            model.addRow(new Object[]{
-                hd.getMaHD(),
-                hd.getMaNV(),
-                hd.getTrangThai() ? "Đã thanh toán" : "Chưa thanh toán",
-                hd.getNgayThanhToan(),
-                hd.getGioThanhToan()
-            });
-        }
-        tblHoaDon.setModel(model);
-    }
-
-    public void LoadChiTietHoaDon(int maHD) throws ClassNotFoundException, SQLException {
-        DefaultTableModel model = new DefaultTableModel();
-        model.setRowCount(0);
-        model.setColumnCount(8);
-        String[] columns = {"Mã CTHD", "Mã HD", "Mã KM", "Mã CTSP", "Tên SP", "Đơn Giá", "Giá Áp Dụng KM", "Trạng Thái"};
-        model.setColumnIdentifiers(columns);
-        for (ChiTietHoaDon cthd : qlbh.getAllChiTietHoaDon(maHD)) {
-            model.addRow(new Object[]{
-                cthd.getMaCTHD(),
-                cthd.getMaHD(),
-                cthd.getMaKM(),
-                cthd.getMaCTSP(),
-                cthd.getTenSP(),
-                cthd.getDonGia(),
-                cthd.getGiaApDungMaKM(),
-                cthd.getTrangThai() ? "Còn hiệu lực" : "Hủy"
-            });
-        }
-        tblHoaDonChiTiet.setModel(model);
-    }
-
-    public void LoadChiTietSP(int maSP) throws ClassNotFoundException, SQLException {
-        DefaultTableModel model = new DefaultTableModel();
-        model.setRowCount(0);
-        model.setColumnCount(6);
-        String[] columns = {"Mã CTSP", "Mã SP", "Tên SP", "Đơn Giá", "Ngày Nhập", "Hạn SD"};
-        model.setColumnIdentifiers(columns);
-        for (ChiTietSanPham ctsp : qlbh.getChiTietSanPham(maSP)) {
-            model.addRow(new Object[]{
-                ctsp.getMaCTSP(),
-                ctsp.getMaSP(),
-                ctsp.getTenSP(),
-                ctsp.getDonGia(),
-                ctsp.getNgayNhap(),
-                ctsp.getHanSD()
-            });
-        }
-        tblChiTietSanPham.setModel(model);
-    }
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -277,17 +193,7 @@ public class BanHang extends javax.swing.JFrame {
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         // TODO add your handling code here:
-       rowIndexHD = tblHoaDon.getSelectedRow();
-        try {
-            if (rowIndexHD < 0 || rowIndexHD >= qlbh.getAllHoaDon().size()) {
-                return;
-            } else {
-                maHD = (int) tblHoaDon.getValueAt(rowIndexHD, 0);
-                LoadChiTietHoaDon(maHD);
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
-        }
+       
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
     private void tblChiTietSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblChiTietSanPhamMouseClicked
@@ -297,36 +203,11 @@ public class BanHang extends javax.swing.JFrame {
 
     private void tblSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamMouseClicked
         // TODO add your handling code here:
-       rowIndexSP = tblSanPham.getSelectedRow();
-        try {
-            if (rowIndexSP < 0 || rowIndexSP >= qlbh.getAllSanPham().size()) {
-                return;
-            } else {
-                maSP = (int) tblSanPham.getValueAt(rowIndexSP, 0);
-                donGia = (float) tblSanPham.getValueAt(rowIndexSP, 2);
-                LoadChiTietSP(maSP);
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
-        }
+      
     }//GEN-LAST:event_tblSanPhamMouseClicked
 
     private void btnTaoHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHoaDonActionPerformed
-        HoaDon hd = new HoaDon();
-        hd.setMaNV(1); // Giả định MaNV mặc định
-        hd.setTrangThai(false); // Chưa thanh toán
-        hd.setNgayThanhToan(new java.sql.Date(System.currentTimeMillis()));
-        hd.setGioThanhToan((int) (System.currentTimeMillis() % (24 * 60 * 60 * 1000) / (60 * 60 * 1000))); // Giả định giờ
-        try {
-            if (qlbh.ThemHoaDon(hd)) {
-                JOptionPane.showMessageDialog(rootPane, "Thêm hóa đơn thành công");
-                LoadHoaDon();
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Thêm hóa đơn thất bại");
-            }
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
     }//GEN-LAST:event_btnTaoHoaDonActionPerformed
 
     private void btnThemSPVaoHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemSPVaoHDActionPerformed
