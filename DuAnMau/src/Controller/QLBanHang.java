@@ -235,13 +235,14 @@ public class QLBanHang {
 
     // Thêm hóa đơn
     public boolean ThemHoaDon(HoaDon hd) throws ClassNotFoundException {
-        String query = "INSERT INTO HOADON (MaNV, TrangThai, NgayThanhToan) VALUES (?, ?, ?)";
+        String query = "INSERT INTO HOADON (MaHD, MaNV, TrangThai, NgayThanhToan) VALUES (?, ?, ?, ?)";
         try {
             Connection connect = conn.DBConnect();
             PreparedStatement stmt = connect.prepareStatement(query);
-            stmt.setInt(1, hd.getMaNV());
-            stmt.setBoolean(2, hd.getTrangThai());
-            stmt.setDate(3, new java.sql.Date(hd.getNgayThanhToan().getTime()));
+            stmt.setInt(1, hd.getMaHD());
+            stmt.setInt(2, hd.getMaNV());
+            stmt.setBoolean(3, hd.getTrangThai());
+            stmt.setDate(4, new java.sql.Date(hd.getNgayThanhToan().getTime()));
             int rowsAffected = stmt.executeUpdate();
             stmt.close();
             connect.close();
@@ -254,10 +255,11 @@ public class QLBanHang {
 
     // Thêm chi tiết hóa đơn
     public boolean ThemChiTietHD(ChiTietHoaDon cthd) throws ClassNotFoundException {
-        String query = "INSERT INTO CHITIETHOADON (MaHD, MaKM, MaCTSP, TenSP, DonGia, GiaApDungMaKM, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO CHITIETHOADON (MaCTHD, MaHD, MaKM, MaCTSP, TenSP, DonGia, GiaApDungMaKM, TrangThai) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection connect = conn.DBConnect();
             PreparedStatement stmt = connect.prepareStatement(query);
+            stmt.setInt(1, cthd.getMaCTHD());
             stmt.setInt(1, cthd.getMaHD());
             stmt.setInt(2, cthd.getMaKM());
             stmt.setInt(3, cthd.getMaCTSP());
