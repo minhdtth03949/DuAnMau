@@ -18,15 +18,15 @@ public class SanPham {
     private Date NgayNhap;
     private int MaNV;
 
+    public SanPham() {
+    }
+
     public SanPham(int MaSP, String TenSP, float DonGia, Date NgayNhap, int MaNV) {
         this.MaSP = MaSP;
         this.TenSP = TenSP;
         this.DonGia = DonGia;
         this.NgayNhap = NgayNhap;
         this.MaNV = MaNV;
-    }
-
-    public SanPham() {
     }
 
     public int getMaSP() {

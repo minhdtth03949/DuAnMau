@@ -37,6 +37,7 @@ public class BanHang extends javax.swing.JFrame {
             Initable();
             FilltoTableSanPham();
             FilltoTableHoaDon();
+
         } catch (Exception ex) {
             Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi khởi tạo dữ liệu: " + ex.getMessage());
