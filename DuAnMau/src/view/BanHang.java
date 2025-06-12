@@ -8,7 +8,6 @@ import Model.ChiTietHoaDon;
 import Model.ChiTietSanPham;
 import Model.HoaDon;
 import Model.SanPham;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -19,11 +18,86 @@ import javax.swing.table.DefaultTableModel;
  */
 public class BanHang extends javax.swing.JFrame {
 
+    
     /**
      * Creates new form BanHang
      */
     
-   
+   private QLBanHang qlbh;
+    private DefaultTableModel modelSanPham, modelHoaDon, modelChiTietSanPham, modelChiTietHoaDon;
+    private int maSP, maCTSP, maHD;
+
+    /**
+     * Creates new form BanHang
+     */
+    public BanHang() {
+        try {
+            qlbh = new QLBanHang();
+            initComponents();
+            Initable();
+            FilltoTableSanPham();
+            FilltoTableHoaDon();
+        } catch (Exception ex) {
+            Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Lỗi khi khởi tạo dữ liệu: " + ex.getMessage());
+        }
+    }
+
+    // Khởi tạo các DefaultTableModel
+    private void Initable() {
+        // Bảng sản phẩm
+        modelSanPham = new DefaultTableModel();
+        modelSanPham.setColumnIdentifiers(new String[]{"Mã SP", "Tên SP", "Đơn Giá", "Ngày Nhập", "Mã NV"});
+        tblSanPham.setModel(modelSanPham);
+
+        // Bảng hóa đơn
+        modelHoaDon = new DefaultTableModel();
+        modelHoaDon.setColumnIdentifiers(new String[]{"Mã HD", "Mã NV", "Trạng Thái", "Ngày Thanh Toán"});
+        tblHoaDon.setModel(modelHoaDon);
+
+        // Bảng chi tiết sản phẩm
+        modelChiTietSanPham = new DefaultTableModel();
+        modelChiTietSanPham.setColumnIdentifiers(new String[]{"Mã CTSP", "Mã SP", "Tên SP", "Đơn Giá", "Ngày Nhập", "Hạn SD"});
+        tblChiTietSanPham.setModel(modelChiTietSanPham);
+
+        // Bảng chi tiết hóa đơn
+        modelChiTietHoaDon = new DefaultTableModel();
+        modelChiTietHoaDon.setColumnIdentifiers(new String[]{"Mã CTHD", "Mã HD", "Mã KM", "Mã CTSP", "Tên SP", "Đơn Giá", "Giá KM", "Trạng Thái"});
+        tblHoaDonChiTiet.setModel(modelChiTietHoaDon);
+    }
+
+    // Tải dữ liệu lên bảng sản phẩm
+    private void FilltoTableSanPham() throws ClassNotFoundException {
+        modelSanPham.setRowCount(0);
+        for (SanPham sp : qlbh.getAllSanPham()) {
+            modelSanPham.addRow(qlbh.getRowSanPham(sp));
+        }
+    }
+
+    // Tải dữ liệu lên bảng hóa đơn
+    private void FilltoTableHoaDon() throws ClassNotFoundException {
+        modelHoaDon.setRowCount(0);
+        for (HoaDon hd : qlbh.getAllHoaDon()) {
+            modelHoaDon.addRow(qlbh.getRowHoaDon(hd));
+        }
+    }
+
+    // Tải dữ liệu lên bảng chi tiết sản phẩm
+    private void FilltoTableChiTietSanPham(int maSP) throws ClassNotFoundException {
+        modelChiTietSanPham.setRowCount(0);
+        for (ChiTietSanPham ctsp : qlbh.getChiTietSanPham(maSP)) {
+            modelChiTietSanPham.addRow(qlbh.getRowChiTietSanPham(ctsp));
+        }
+    }
+
+    // Tải dữ liệu lên bảng chi tiết hóa đơn
+    private void FilltoTableChiTietHoaDon(int maHD) throws ClassNotFoundException {
+        modelChiTietHoaDon.setRowCount(0);
+        for (ChiTietHoaDon cthd : qlbh.getAllChiTietHoaDon(maHD)) {
+            modelChiTietHoaDon.addRow(qlbh.getRowChiTietHoaDon(cthd));
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
