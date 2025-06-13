@@ -46,7 +46,7 @@ public class BanHang1 extends javax.swing.JPanel {
             FilltoTableKhuyenMai();
 
         } catch (Exception ex) {
-            Logger.getLogger(BanHang.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(BanHang1.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, "Lỗi khi khởi tạo dữ liệu: " + ex.getMessage());
         }
     }

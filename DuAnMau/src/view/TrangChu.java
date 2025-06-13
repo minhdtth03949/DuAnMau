@@ -37,7 +37,6 @@ public class TrangChu extends javax.swing.JFrame {
         btnQLSP = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         btnBanHang = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -57,6 +56,11 @@ public class TrangChu extends javax.swing.JFrame {
         });
 
         jButton3.setText("Quan Ly Khuyen Mai");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         btnBanHang.setText("Ban Hang");
         btnBanHang.addActionListener(new java.awt.event.ActionListener() {
@@ -64,8 +68,6 @@ public class TrangChu extends javax.swing.JFrame {
                 btnBanHangActionPerformed(evt);
             }
         });
-
-        jButton5.setText("Thong Ke Doanh Thu");
 
         jPanel1.setBackground(new java.awt.Color(255, 204, 204));
 
@@ -91,8 +93,7 @@ public class TrangChu extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 141, Short.MAX_VALUE)
                         .addComponent(btnQLSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnQLNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -111,9 +112,7 @@ public class TrangChu extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnBanHang, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 270, Short.MAX_VALUE)))
+                        .addGap(0, 337, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -160,6 +159,21 @@ public class TrangChu extends javax.swing.JFrame {
         jPanel1.revalidate();
     }//GEN-LAST:event_btnBanHangActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        
+        QLKMPanel p4 = new QLKMPanel();
+        p4.setSize(1100, 1000); // kichs thuoc = panel goc
+        p4.setLocation(0, 0);
+
+        //b2: de panel vao form
+        jPanel1.removeAll();//xoa panel hien tai dang hien thi
+        jPanel1.add(p4, BorderLayout.CENTER);//add them panel moi, hien thi o giua
+        jPanel1.repaint();
+        jPanel1.revalidate();
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -200,7 +214,6 @@ public class TrangChu extends javax.swing.JFrame {
     private javax.swing.JButton btnQLNV;
     private javax.swing.JButton btnQLSP;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
