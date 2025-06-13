@@ -54,8 +54,8 @@ public class QLKhuyenMai {
     
     // Thêm Dữ Liệu Khuyến Mãi
     public int Themkm(KhuyenMai km){
-        String sql = "INSERT INTO KhuyenMai () VALUES\n" +
-                      "(  ?  ,    ?   ,   ?   ,   ?  ,   ?   ),";
+        String sql = "INSERT INTO KhuyenMai VALUES\n" +
+                      "(  ?  ,    ?   ,   ?   ,   ?  ,   ?   )";
         try {
             Connection connect = conn.DBConnect();
             PreparedStatement pstm = connect.prepareStatement(sql);
@@ -77,8 +77,7 @@ public class QLKhuyenMai {
     
     // Xoá Dữ Liệu Khuyến Mãi
     public int Xoakm(int TheoMa){
-        String sql = "DELETE FROM ChiTietHoaDon WHERE MaKM =  ?  ;\n" +
-                     "DELETE FROM KhuyenMai WHERE MaKM =  ?   ;";
+        String sql = "DELETE FROM KhuyenMai WHERE MaKM =  ?";
         try {
             Connection connect = conn.DBConnect();
             PreparedStatement pstm = connect.prepareStatement(sql);
@@ -118,7 +117,7 @@ public class QLKhuyenMai {
     // Tìm Kiếm Khuyến Mãi Theo Thời Gian
     public List<KhuyenMai> TimKiem(java.sql.Date TGBD , java.sql.Date TGKT)  {
         List<KhuyenMai> listKM = new ArrayList<>();
-        String query = "SELECT * FROM KhuyenMai";
+        String query = "SELECT * FROM KhuyenMai WHERE ThoiGianBatDau >= ? AND ThoiGianKetThuc <= ?";
         try {
             Connection connect = conn.DBConnect();
             Statement stmt = connect.createStatement();

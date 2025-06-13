@@ -109,22 +109,46 @@ public class Login extends javax.swing.JFrame {
     private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
         // TODO add your handling code here:
                                              
-    NhanVien nv = new NhanVien();
+//    NhanVien nv = new NhanVien();
+//    nv.setEmail(txtEmail.getText());
+//    nv.setMatKhau(txtMK.getText());
+////    System.out.println("Email nhập: '" + nv.getEmail() + "', Mật khẩu nhập: '" + nv.getMatKhau() + "'");
+////    System.out.println("Bắt đầu lấy danh sách nhân viên...");
+//    for(NhanVien n : qlnv.getAll()) {
+//       System.out.println("Email DB: '" + n.getEmail() + "', Mật khẩu DB: '" + n.getMatKhau() + "'");
+//        if(n.getEmail().equals(nv.getEmail()) && n.getMatKhau().equals(nv.getMatKhau())) {
+//            System.out.println("Tìm thấy tài khoản khớp!");
+//            TrangChu tc = new TrangChu(nv);
+//            tc.setLocationRelativeTo(null);
+//            tc.setVisible(true);
+//            System.out.println("Form TrangChu visible: " + tc.isVisible());
+//        }
+//    }
+
+     NhanVien nv = new NhanVien();
     nv.setEmail(txtEmail.getText());
     nv.setMatKhau(txtMK.getText());
-    System.out.println("Email nhập: '" + nv.getEmail() + "', Mật khẩu nhập: '" + nv.getMatKhau() + "'");
-    System.out.println("Bắt đầu lấy danh sách nhân viên...");
-    for(NhanVien n : qlnv.getAll()) {
-        System.out.println("Email DB: '" + n.getEmail() + "', Mật khẩu DB: '" + n.getMatKhau() + "'");
-        if(n.getEmail().equals(nv.getEmail()) && n.getMatKhau().equals(nv.getMatKhau())) {
+
+    for (NhanVien n : qlnv.getAll()) {
+        if (n.getEmail().equals(nv.getEmail()) && n.getMatKhau().equals(nv.getMatKhau())) {
             System.out.println("Tìm thấy tài khoản khớp!");
-            TrangChu tc = new TrangChu(nv);
-            tc.setLocationRelativeTo(null);
-            tc.setVisible(true);
-            System.out.println("Form TrangChu visible: " + tc.isVisible());
+            
+            if (Boolean.TRUE.equals(n.getVaiTro())) {
+                // Admin → TrangChu
+                TrangChu2 tc = new TrangChu2(n);
+                tc.setLocationRelativeTo(null);
+                tc.setVisible(true);
+            } else {
+                // Nhân viên → TrangChu2
+                TrangChu3 tc2 = new TrangChu3(n);
+                tc2.setLocationRelativeTo(null);
+                tc2.setVisible(true);
+            }
+
+            this.dispose(); // Đóng Login
+            break;
         }
     }
-
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
     private void btn_CannelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CannelActionPerformed

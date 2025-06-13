@@ -37,13 +37,8 @@
                               <Component id="jScrollPane5" min="-2" pref="293" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="btnXoaHoaDon" min="-2" pref="153" max="-2" attributes="0"/>
-                                  <Component id="btnTaoHoaDon" min="-2" pref="153" max="-2" attributes="0"/>
-                                  <Component id="btnXoaSPKhoiHD" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                                  <Component id="btnThemSPVaoHD" alignment="0" min="-2" pref="148" max="-2" attributes="0"/>
-                              </Group>
+                              <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                              <Component id="btnTaoHoaDon" min="-2" pref="153" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -66,23 +61,15 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jScrollPane1" min="-2" pref="161" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                       <Component id="btnTaoHoaDon" min="-2" pref="62" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="btnXoaHoaDon" min="-2" pref="62" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane3" min="-2" pref="151" max="-2" attributes="0"/>
-                  <Group type="102" attributes="0">
-                      <Component id="btnXoaSPKhoiHD" min="-2" pref="68" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnThemSPVaoHD" min="-2" pref="68" max="-2" attributes="0"/>
-                  </Group>
-              </Group>
+              <Component id="jScrollPane3" min="-2" pref="151" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="386" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -137,11 +124,6 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnXoaSPKhoiHD">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="X&#xf3;a kh&#x1ecf;i H&#xf3;a &#x110;&#x1a1;n"/>
-      </Properties>
-    </Component>
     <Component class="javax.swing.JButton" name="btnTaoHoaDon">
       <Properties>
         <Property name="text" type="java.lang.String" value="T&#x1ea1;o H&#xf3;a &#x110;&#x1a1;n"/>
@@ -171,22 +153,9 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JButton" name="btnThemSPVaoHD">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Th&#xea;m V&#xe0;o H&#xf3;a &#x110;&#x1a1;n"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnThemSPVaoHDActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="text" type="java.lang.String" value="Chi Ti&#x1ebf;t H&#xf3;a &#x110;&#x1a1;n"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnXoaHoaDon">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="X&#xf3;a H&#xf3;a &#x110;&#x1a1;n"/>
       </Properties>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
